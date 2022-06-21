@@ -15,4 +15,19 @@ public class PersonaServicio {
     public List<Persona> findAll(){
         return (List<Persona>) personaRepositorio.findAll();
     }
+
+    public String retrievePersonaNombresByCodigo(Long codigo){
+        return (String) personaRepositorio.findPersonaNombresByCodigo(codigo);
+    }
+
+    public List<String> retrieveAllNombres(){
+            return (List<String>) personaRepositorio.findAllNombres();
+    }
+    public Persona retrievePersonaByCedula(String cedula){
+        return (Persona) personaRepositorio.finPersonaByCedula(cedula);
+    }
+
+    public void save(Persona persona){
+            personaRepositorio.save(persona);
+    }
 }
