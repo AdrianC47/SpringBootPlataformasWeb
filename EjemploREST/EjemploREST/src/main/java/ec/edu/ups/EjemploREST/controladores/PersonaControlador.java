@@ -1,7 +1,8 @@
 package ec.edu.ups.EjemploREST.controladores;
 
 import ec.edu.ups.EjemploREST.entidades.Persona;
-import ec.edu.ups.EjemploREST.entidades.peticiones.CrearPersona;
+import ec.edu.ups.EjemploREST.entidades.peticiones.persona.ActualizarPersona;
+import ec.edu.ups.EjemploREST.entidades.peticiones.persona.CrearPersona;
 import ec.edu.ups.EjemploREST.servicios.PersonaNoEncontradaException;
 import ec.edu.ups.EjemploREST.servicios.PersonaServicio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,8 +51,6 @@ public class PersonaControlador {
         @PostMapping("/persona/create")
         public ResponseEntity<Persona> createPersona(@RequestBody CrearPersona crearPersona){
             Persona persona = new Persona();
-
-
             persona.setNombres(crearPersona.getNombres());
             persona.setApellidos(crearPersona.getApellidos());
             persona.setCedula(crearPersona.getCedula());
@@ -60,5 +59,27 @@ public class PersonaControlador {
             return ResponseEntity.ok(persona);
         }
 
+
+
+        @PutMapping("/persona/update")
+        public ResponseEntity<String> updatePersona(@RequestBody ActualizarPersona actualizarPersona){
+            Optional<Persona> personaOptional =personaServicio.findByCodigo(actualizarPersona.getCodigo());
+            if (personaOptional.isEmpty()) {
+                return ResponseEntity.badRequest().build();
+            }
+        Persona personaEncontrada = personaOptional.get();
+            personaEncontrada.setCedula(actualizarPersona.getCedula());
+            personaEncontrada.setEdad(actualizarPersona.getEdad());
+            personaEncontrada.setNombres(actualizarPersona.getNombres());
+            personaEncontrada.setApellidos(actualizarPersona.getApellidos());
+            personaServicio.save(personaEncontrada);
+            return ResponseEntity.ok("Persona actualizada");
+    }
+
+    @DeleteMapping("/persona/delete/{codigo}")
+    public ResponseEntity<String> deletePersona(@PathVariable long codigo){
+        personaServicio.delete(codigo);
+        return  ResponseEntity.ok("Persona eliminada correctamente");
+    }
 
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PersonaServicio {
@@ -30,4 +31,20 @@ public class PersonaServicio {
     public void save(Persona persona){
             personaRepositorio.save(persona);
     }
+
+    public Optional<Persona> findByCodigo(long codigo){
+        return (Optional<Persona>) personaRepositorio.findById(codigo);
+    }
+
+
+    public void edit(Persona persona){
+        personaRepositorio.save(persona);
+    }
+
+    public void delete(long codigo){
+      personaRepositorio.deleteById(codigo);
+    }
+
+
 }
+

@@ -1,4 +1,4 @@
-package ec.edu.ups.EjemploREST.entidades.peticiones;
+package ec.edu.ups.EjemploREST.entidades.peticiones.persona;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
