@@ -1,13 +1,15 @@
 package ec.edu.ups.EjemploREST.entidades;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
-public class Persona {
+public class Persona implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long codigo;
@@ -15,6 +17,10 @@ public class Persona {
     private String nombres;
     private String apellidos;
     private int edad;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "persona",cascade = CascadeType.ALL)
+
+    private List<Direccion> direcciones;
 
     public Persona(long codigo, String cedula, String nombres, String apellidos, int edad) {
         this.codigo = codigo;
@@ -25,6 +31,14 @@ public class Persona {
     }
 
     public Persona() {
+    }
+
+    public List<Direccion> getDirecciones() {
+        return direcciones;
+    }
+
+    public void setDirecciones(List<Direccion> direcciones) {
+        this.direcciones = direcciones;
     }
 
     public long getCodigo() {
